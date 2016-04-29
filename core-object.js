@@ -2,6 +2,8 @@
 
 var assignProperties = require('./lib/assign-properties');
 var deprecation = require('./lib/deprecation');
+var setWith = require('lodash/setWith');
+var get = require('lodash/get');
 
 function needsNew() {
   throw new TypeError("Failed to construct: Please use the 'new' operator, this object constructor cannot be called as a function.");
@@ -20,6 +22,16 @@ CoreObject.prototype.init = function(options) {
       this[key] = options[key];
     }
   }
+};
+
+CoreObject.prototype.set = function(key, value) {
+  setWith(this, key, value, {});
+
+  return value;
+};
+
+CoreObject.prototype.get = function(key, value) {
+  return get(this, key);
 };
 
 CoreObject.extend = function(options) {
