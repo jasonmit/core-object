@@ -71,7 +71,6 @@ describe('core-object.js', function() {
   });
 
   describe('init', function(){
-
     it('init is called with the arguments to new', function() {
       var called = false;
 
@@ -100,6 +99,37 @@ describe('core-object.js', function() {
       var instance = new Klass2();
 
       assert.equal(called, 1);
+    });
+  });
+
+  describe('set/get', function(){
+    it('set/get works', function() {
+      var Klass = CoreObject.extend({
+        foo: null
+      });
+
+      var instance = new Klass('foo');
+      instance.set('foo', 'bar');
+      assert.equal(instance.get('foo'), 'bar');
+    });
+
+    it('set returns value', function() {
+      var Klass = CoreObject.extend({
+        foo: null
+      });
+
+      var instance = new Klass('foo');
+      assert.equal(instance.set('foo', 'bar'), 'bar');
+    });
+
+    it('set/get works with constructor missing paths', function() {
+      var Klass = CoreObject.extend({
+        foo: null
+      });
+
+      var instance = new Klass('foo');
+      instance.set('foo.bar', 'baz');
+      assert.equal(instance.get('foo.bar'), 'baz');
     });
   });
 });
